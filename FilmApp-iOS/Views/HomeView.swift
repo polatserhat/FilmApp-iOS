@@ -15,23 +15,28 @@ struct HomeView: View {
             ScrollView {
                 VStack {
                     // Now Playing Section
-                    if !viewModel.nowPlayingMovies.isEmpty {
-                        CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
-                    } else {
-                        Text("Loading...")
-                            .font(.title)
-                            .padding()
-                    }
+                    CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
+                    
+                    // Popular Section
+                    CategoryView(categoryTitle: "Popular", movies: viewModel.popularMovies)
+                    
+                    // Top Rated Section
+                    CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
                 }
             }
             .navigationBarTitle("Movies")
             .onAppear {
                 viewModel.fetchNowPlayingMovies()
+                viewModel.fetchPopularMovies()
+                viewModel.fetchTopRatedMovies()
             }
         }
-        .preferredColorScheme(.dark)
     }
 }
+
+
+
+import SwiftUI
 
 struct CategoryView: View {
     let categoryTitle: String
@@ -65,6 +70,8 @@ struct CategoryView: View {
         .padding(.vertical)
     }
 }
+
+
 
 
 
