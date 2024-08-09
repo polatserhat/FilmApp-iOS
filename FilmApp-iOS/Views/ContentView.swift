@@ -14,19 +14,19 @@ struct ContentView: View {
             HomeView()
                 .tabItem {
                     Image(systemName: "house.fill")
-                    Text("Homepage")
+                    Text("Home")
                 }
 
             FavouritesView()
                 .tabItem {
-                    Image(systemName: "star.fill")
-                    Text("Favourites")
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
                 }
 
             OthersView()
                 .tabItem {
-                    Image(systemName: "ellipsis.circle.fill")
-                    Text("Others")
+                    Image(systemName: "movieclapper")
+                    Text("Movie")
                 }
         }
         .preferredColorScheme(.dark)
