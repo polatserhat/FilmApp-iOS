@@ -11,7 +11,7 @@ struct MovieCell: View {
     let movie: Movie
     
     var body: some View {
-        VStack {
+        VStack(spacing: 4) {
             if let posterURL = movie.posterURL {
                 AsyncImage(url: posterURL) { phase in
                     switch phase {
@@ -28,18 +28,23 @@ struct MovieCell: View {
                         EmptyView()
                     }
                 }
-                .frame(width: 150, height: 225)
+                .frame(width: 100, height: 150)
                 .cornerRadius(10)
+                .padding(.horizontal, 2) // Poster etrafındaki yatay padding azaltıldı
+                .padding(.vertical, 4)   // Poster etrafındaki dikey padding azaltıldı
             } else {
                 Color.gray
-                    .frame(width: 150, height: 225)
+                    .frame(width: 100, height: 150)
                     .cornerRadius(10)
+                    .padding(.horizontal, 2)
+                    .padding(.vertical, 4)
             }
             Text(movie.title)
                 .font(.caption)
                 .multilineTextAlignment(.center)
-                .frame(width: 150)
+                .frame(width: 100)
         }
     }
 }
+
 
