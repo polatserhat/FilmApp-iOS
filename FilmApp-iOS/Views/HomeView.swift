@@ -12,24 +12,28 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-                    ZStack(alignment: .top) { // ZStack ile başlığı ve içerik kısmını üst üste koyuyoruz
+                    ZStack(alignment: .top) {
                         VStack(spacing: 0) {
-                            // Sabit başlık
+                            
                             Text("TMDB")
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .padding()
 
-                            // İçerik kısmı
+                            
                             ScrollView {
                                 VStack {
-                                    // Now Playing Section
+                                   
+                                    //Now Playing Section
+                                    
                                     CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
 
-                                    // Popular Section
+                                   //Popular Section
+                                    
                                     CategoryView(categoryTitle: "Popular", movies: viewModel.popularMovies)
 
-                                    // Top Rated Section
+                                    //Top Rated Section
+                                    
                                     CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
 
                                     // Upcoming Section
