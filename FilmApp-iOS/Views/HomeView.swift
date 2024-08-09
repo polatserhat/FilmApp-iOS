@@ -4,6 +4,7 @@
 //
 //  Created by Serhat  on 05.08.24.
 //
+import SwiftUI
 
 import SwiftUI
 
@@ -12,40 +13,48 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-                    ZStack(alignment: .top) {
-                        VStack(spacing: 0) {
-                            
-                            Text("TMDB")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .padding()
-                            
-                            Image(systemName: "gearshape")
-                            
-                            ScrollView {
-                                VStack {
-                                   
-                                    //Now Playing Section
-                                    
-                                    CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
-
-                                   //Popular Section
-                                    
-                                    CategoryView(categoryTitle: "Popular", movies: viewModel.popularMovies)
-
-                                    //Top Rated Section
-                                    
-                                    CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
-
-                                    // Upcoming Section
-                                    CategoryView(categoryTitle: "Upcoming", movies: viewModel.upcomingMovies)
-                                }
-                            }
-                        }
-                        settingsButton
-                            .padding(.top, 10)
-                            .padding(.trailing, 20)
+            ZStack {
+                VStack(spacing: 0) {
+                    HStack {
+                        Spacer() // Sol tarafta boşluk bırakıyoruz
+                        
+                        Text("TMDB")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.top, 10) // Üst boşluk ekleniyor
+                        
+                        Spacer() // Sağ tarafta boşluk bırakıyoruz
                     }
+                    .padding(.horizontal)
+                    
+                    ScrollView {
+                        VStack {
+                            //Now Playing Section
+                            CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
+                            
+                            //Popular Section
+                            CategoryView(categoryTitle: "Popular", movies: viewModel.popularMovies)
+                            
+                            //Top Rated Section
+                            CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
+                            
+                            // Upcoming Section
+                            CategoryView(categoryTitle: "Upcoming", movies: viewModel.upcomingMovies)
+                        }
+                    }
+                }
+                .background(Color.black) // Arka plan rengini koyu yapıyoruz
+
+                // Ayarlar butonunu sağ üst köşeye yerleştiriyoruz
+                VStack {
+                    HStack {
+                        Spacer() // Sağ üst köşe için boşluk
+                        settingsButton
+                    }
+                    Spacer() // Butonu yukarıda tutmak için alt taraf boşluğu
+                }
+                
+            }
             .preferredColorScheme(.dark)
             .navigationBarHidden(true)
             .onAppear {
@@ -58,22 +67,23 @@ struct HomeView: View {
     }
 }
 
-var settingsButton: some View {
-        NavigationLink(destination: SettingsView()) {
-            Image(systemName: "gearshape.fill")
-                .imageScale(.large)
-                .padding(10)
-                .background(Color.white.opacity(0.7))
-                .clipShape(Circle())
-        }
-    }
 
+var settingsButton: some View {
+    NavigationLink(destination: SettingsView()) {
+        Image(systemName: "gearshape")
+            .imageScale(.large)
+            .padding(10)
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            
+    }
+}
 
 struct SettingsView: View {
     var body: some View {
-        Text("Ayarlar Ekranı")
+        Text("Settings")
             .font(.largeTitle)
-            .navigationBarTitle("Ayarlar", displayMode: .inline)
+            .navigationBarTitle("Settings", displayMode: .inline)
     }
 }
 
