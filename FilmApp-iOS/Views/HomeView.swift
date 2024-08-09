@@ -22,6 +22,7 @@ struct HomeView: View {
                             .font(.title2)
                             .fontWeight(.bold)
                             .padding(.top, 10) // Üst boşluk ekleniyor
+                            .padding(.bottom,20)
                         
                         Spacer() // Sağ tarafta boşluk bırakıyoruz
                     }
@@ -71,7 +72,7 @@ struct HomeView: View {
 var settingsButton: some View {
     NavigationLink(destination: SettingsView()) {
         Image(systemName: "gearshape")
-            .imageScale(.large)
+            .imageScale(.medium)
             .padding(10)
             .foregroundColor(.white)
             .fontWeight(.bold)
@@ -96,7 +97,7 @@ struct CategoryView: View {
     let movies: [Movie]
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading,spacing: 2) {
             HStack {
                 Text(categoryTitle)
                     .font(.title)
@@ -110,7 +111,7 @@ struct CategoryView: View {
             .padding(.horizontal)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
+                HStack{
                     ForEach(movies) { movie in
                         NavigationLink(destination: MovieDetailView(movie: movie)) {
                             MovieCell(movie: movie)
@@ -122,7 +123,7 @@ struct CategoryView: View {
                 .fontWeight(.bold)
             }
         }
-        .padding(.vertical)
+        .padding(.vertical,0)
     }
 }
 

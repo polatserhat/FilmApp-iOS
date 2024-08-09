@@ -36,8 +36,8 @@ struct ContentView: View {
 struct FavouritesView: View {
     var body: some View {
         NavigationView {
-            Text("Favourites View")
-                .navigationBarTitle("Favourites")
+            Text("Search View")
+                .navigationBarTitle("Search")
         }
     }
 }
@@ -45,8 +45,8 @@ struct FavouritesView: View {
 struct OthersView: View {
     var body: some View {
         NavigationView {
-            Text("Others View")
-                .navigationBarTitle("Others")
+            Text("Movie View")
+                .navigationBarTitle("Movie")
         }
     }
 }
