@@ -12,22 +12,34 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack {
-                    // Now Playing Section
-                    CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
-                    
-                    // Popular Section
-                    CategoryView(categoryTitle: "Popular", movies: viewModel.popularMovies)
-                    
-                    // Top Rated Section
-                    CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
-                    
-                    // Upcoming Section
-                    CategoryView(categoryTitle: "Upcoming", movies: viewModel.upcomingMovies)
-                }
-            }
-            .navigationBarTitle("Movies")
+                    ZStack(alignment: .top) { // ZStack ile başlığı ve içerik kısmını üst üste koyuyoruz
+                        VStack(spacing: 0) {
+                            // Sabit başlık
+                            Text("TMDB")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .padding()
+
+                            // İçerik kısmı
+                            ScrollView {
+                                VStack {
+                                    // Now Playing Section
+                                    CategoryView(categoryTitle: "Now Playing", movies: viewModel.nowPlayingMovies)
+
+                                    // Popular Section
+                                    CategoryView(categoryTitle: "Popular", movies: viewModel.popularMovies)
+
+                                    // Top Rated Section
+                                    CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
+
+                                    // Upcoming Section
+                                    CategoryView(categoryTitle: "Upcoming", movies: viewModel.upcomingMovies)
+                                }
+                            }
+                        }
+                    }
+            .preferredColorScheme(.dark)
+            .navigationBarHidden(true)
             .onAppear {
                 viewModel.fetchNowPlayingMovies()
                 viewModel.fetchPopularMovies()
@@ -70,6 +82,8 @@ struct CategoryView: View {
                     }
                 }
                 .padding(.horizontal)
+                .foregroundColor(.white)
+                .fontWeight(.bold)
             }
         }
         .padding(.vertical)
