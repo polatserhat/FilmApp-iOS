@@ -19,7 +19,8 @@ struct HomeView: View {
                                 .font(.title2)
                                 .fontWeight(.bold)
                                 .padding()
-
+                            
+                            Image(systemName: "gearshape")
                             
                             ScrollView {
                                 VStack {
@@ -41,6 +42,9 @@ struct HomeView: View {
                                 }
                             }
                         }
+                        settingsButton
+                            .padding(.top, 10)
+                            .padding(.trailing, 20)
                     }
             .preferredColorScheme(.dark)
             .navigationBarHidden(true)
@@ -54,6 +58,24 @@ struct HomeView: View {
     }
 }
 
+var settingsButton: some View {
+        NavigationLink(destination: SettingsView()) {
+            Image(systemName: "gearshape.fill")
+                .imageScale(.large)
+                .padding(10)
+                .background(Color.white.opacity(0.7))
+                .clipShape(Circle())
+        }
+    }
+
+
+struct SettingsView: View {
+    var body: some View {
+        Text("Ayarlar Ekranı")
+            .font(.largeTitle)
+            .navigationBarTitle("Ayarlar", displayMode: .inline)
+    }
+}
 
 
 
@@ -62,7 +84,7 @@ import SwiftUI
 struct CategoryView: View {
     let categoryTitle: String
     let movies: [Movie]
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -76,7 +98,7 @@ struct CategoryView: View {
                 }
             }
             .padding(.horizontal)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(movies) { movie in
@@ -86,18 +108,13 @@ struct CategoryView: View {
                     }
                 }
                 .padding(.horizontal)
-                .foregroundColor(.white)
+                .foregroundColor(.white) // Yazıların beyaz renk olmasını sağlar
                 .fontWeight(.bold)
             }
         }
         .padding(.vertical)
     }
 }
-
-
-
-
-
 
 
 
