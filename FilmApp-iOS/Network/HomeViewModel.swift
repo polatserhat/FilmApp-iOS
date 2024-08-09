@@ -11,6 +11,7 @@ class HomeViewModel: ObservableObject {
     @Published var nowPlayingMovies: [Movie] = []
     @Published var popularMovies: [Movie] = []
     @Published var topRatedMovies: [Movie] = []
+    @Published var upcomingMovies: [Movie] = []
 
     private let apiService = APIService()
 
@@ -48,6 +49,18 @@ class HomeViewModel: ObservableObject {
                     self?.topRatedMovies = movies
                 case .failure(let error):
                     print("Error fetching top rated movies: \(error)")
+                }
+            }
+        }
+    }
+    func fetchUpcomingMovies() {
+        apiService.fetchUpcomingMovies { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let movies):
+                    self?.upcomingMovies = movies
+                case .failure(let error):
+                    print("Error fetching upcoming movies: \(error)")
                 }
             }
         }

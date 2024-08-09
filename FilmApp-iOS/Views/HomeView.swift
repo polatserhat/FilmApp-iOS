@@ -22,6 +22,9 @@ struct HomeView: View {
                     
                     // Top Rated Section
                     CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
+                    
+                    // Upcoming Section
+                    CategoryView(categoryTitle: "Upcoming", movies: viewModel.upcomingMovies)
                 }
             }
             .navigationBarTitle("Movies")
@@ -29,10 +32,12 @@ struct HomeView: View {
                 viewModel.fetchNowPlayingMovies()
                 viewModel.fetchPopularMovies()
                 viewModel.fetchTopRatedMovies()
+                viewModel.fetchUpcomingMovies()
             }
         }
     }
 }
+
 
 
 
@@ -70,6 +75,7 @@ struct CategoryView: View {
         .padding(.vertical)
     }
 }
+
 
 
 
