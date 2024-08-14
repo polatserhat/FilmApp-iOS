@@ -17,7 +17,7 @@ struct ContentView: View {
                     Text("Home")
                 }
 
-            FavouritesView()
+            SearchView() // SearchView yerine ekleniyor
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
@@ -33,14 +33,7 @@ struct ContentView: View {
     }
 }
 
-struct FavouritesView: View {
-    var body: some View {
-        NavigationView {
-            Text("Search View")
-                .navigationBarTitle("Search")
-        }
-    }
-}
+
 
 struct OthersView: View {
     var body: some View {

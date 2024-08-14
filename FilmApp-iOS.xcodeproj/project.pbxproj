@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7302FCCF2C6CC752001F05F7 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7302FCCE2C6CC752001F05F7 /* SearchView.swift */; };
 		73D8D3F92C6139E900276B88 /* FilmApp_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8D3F82C6139E900276B88 /* FilmApp_iOSApp.swift */; };
 		73D8D3FB2C6139E900276B88 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D8D3FA2C6139E900276B88 /* ContentView.swift */; };
 		73D8D3FD2C6139EA00276B88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73D8D3FC2C6139EA00276B88 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7302FCCE2C6CC752001F05F7 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		73D8D3F52C6139E900276B88 /* FilmApp-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FilmApp-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D8D3F82C6139E900276B88 /* FilmApp_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmApp_iOSApp.swift; sourceTree = "<group>"; };
 		73D8D3FA2C6139E900276B88 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				73D8D3FA2C6139E900276B88 /* ContentView.swift */,
+				7302FCCE2C6CC752001F05F7 /* SearchView.swift */,
 				73D8D40A2C6148BE00276B88 /* HomeView.swift */,
 				73D8D4102C62932700276B88 /* MovieListView.swift */,
 				73D8D4122C629B6D00276B88 /* MovieDetailView.swift */,
@@ -190,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7302FCCF2C6CC752001F05F7 /* SearchView.swift in Sources */,
 				73D8D40F2C614D6B00276B88 /* MovieCell.swift in Sources */,
 				73D8D3FB2C6139E900276B88 /* ContentView.swift in Sources */,
 				73D8D40D2C61491E00276B88 /* HomeViewModel.swift in Sources */,
