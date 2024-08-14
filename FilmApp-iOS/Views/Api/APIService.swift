@@ -83,104 +83,153 @@ class APIService {
     }
     
     func fetchPopularMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
-            guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1") else {
-                completion(.failure(MovieServiceError.invalidURL))
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1") else {
+            completion(.failure(MovieServiceError.invalidURL))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
                 return
             }
 
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.allHTTPHeaderFields = headers
-
-            let session = URLSession.shared
-            let dataTask = session.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completion(.failure(MovieServiceError.invalidData))
-                    return
-                }
-
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
-                    completion(.success(decodedResponse.results))
-                } catch {
-                    completion(.failure(MovieServiceError.decodingError(error)))
-                }
+            guard let data = data else {
+                completion(.failure(MovieServiceError.invalidData))
+                return
             }
-            dataTask.resume()
+
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
+                completion(.success(decodedResponse.results))
+            } catch {
+                completion(.failure(MovieServiceError.decodingError(error)))
+            }
         }
+        dataTask.resume()
+    }
+    
     func fetchTopRatedMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
-            guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1") else {
-                completion(.failure(MovieServiceError.invalidURL))
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1") else {
+            completion(.failure(MovieServiceError.invalidURL))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
                 return
             }
 
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.allHTTPHeaderFields = headers
-
-            let session = URLSession.shared
-            let dataTask = session.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completion(.failure(MovieServiceError.invalidData))
-                    return
-                }
-
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
-                    completion(.success(decodedResponse.results))
-                } catch {
-                    completion(.failure(MovieServiceError.decodingError(error)))
-                }
+            guard let data = data else {
+                completion(.failure(MovieServiceError.invalidData))
+                return
             }
-            dataTask.resume()
+
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
+                completion(.success(decodedResponse.results))
+            } catch {
+                completion(.failure(MovieServiceError.decodingError(error)))
+            }
         }
+        dataTask.resume()
+    }
+    
     func fetchUpcomingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
-            guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1") else {
-                completion(.failure(MovieServiceError.invalidURL))
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1") else {
+            completion(.failure(MovieServiceError.invalidURL))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
                 return
             }
 
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.allHTTPHeaderFields = headers
-
-            let session = URLSession.shared
-            let dataTask = session.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completion(.failure(MovieServiceError.invalidData))
-                    return
-                }
-
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
-                    completion(.success(decodedResponse.results))
-                } catch {
-                    completion(.failure(MovieServiceError.decodingError(error)))
-                }
+            guard let data = data else {
+                completion(.failure(MovieServiceError.invalidData))
+                return
             }
-            dataTask.resume()
+
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
+                completion(.success(decodedResponse.results))
+            } catch {
+                completion(.failure(MovieServiceError.decodingError(error)))
+            }
         }
+        dataTask.resume()
+    }
+    
+    // Yeni Ekleme: Filmleri Aramak için
+    func searchMovies(query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
+        guard var urlComponents = URLComponents(string: "https://api.themoviedb.org/3/search/movie") else {
+            completion(.failure(MovieServiceError.invalidURL))
+            return
+        }
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "query", value: query),
+            URLQueryItem(name: "include_adult", value: "false"),
+            URLQueryItem(name: "language", value: "en-US"),
+            URLQueryItem(name: "page", value: "1")
+        ]
+        
+        guard let url = urlComponents.url else {
+            completion(.failure(MovieServiceError.invalidURL))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(MovieServiceError.invalidData))
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodedResponse = try decoder.decode(MovieResponse.self, from: data)
+                completion(.success(decodedResponse.results))
+            } catch {
+                completion(.failure(MovieServiceError.decodingError(error)))
+            }
+        }
+        dataTask.resume()
+    }
 }
 
 enum MovieServiceError: Error {

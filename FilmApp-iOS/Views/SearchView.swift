@@ -8,18 +8,29 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State private var searchText = ""
-    @ObservedObject var viewModel: HomeViewModel
+    @ObservedObject var viewModel: SearchViewModel
     
     var body: some View {
         NavigationView {
             VStack {
                 // Arama Barı
-                TextField("Search", text: $searchText)
+                TextField("Search", text: $viewModel.searchText)
                     .padding(10)
                     .background(Color(.systemGray5))
                     .cornerRadius(8)
                     .padding(.horizontal)
+                
+                // Durum Mesajları
+                if viewModel.isLoading {
+                    ProgressView()
+                        .padding()
+                }
+                
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding()
+                }
                 
                 // Filmler Listesi
                 ScrollView {
@@ -28,7 +39,7 @@ struct SearchView: View {
                         GridItem(.flexible(), spacing: 16),
                         GridItem(.flexible(), spacing: 16)
                     ], spacing: 16) {
-                        ForEach(filteredMovies) { movie in
+                        ForEach(viewModel.searchResults) { movie in
                             VStack {
                                 NavigationLink(destination: MovieDetailView(movie: movie)) {
                                     AsyncImage(url: movie.posterURL) { image in
@@ -47,27 +58,13 @@ struct SearchView: View {
             }
             .preferredColorScheme(.dark)
             .navigationBarTitle("TMDB", displayMode: .inline)
-            .onAppear {
-                viewModel.fetchAllData() // Tüm filmleri yükle
-            }
-        }
-    }
-    
-    var filteredMovies: [Movie] {
-        if searchText.isEmpty {
-            return viewModel.allMovies
-        } else {
-            return viewModel.allMovies.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
         }
     }
 }
 
-
-
-
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(viewModel: HomeViewModel())
+        SearchView(viewModel: SearchViewModel())
     }
 }
 

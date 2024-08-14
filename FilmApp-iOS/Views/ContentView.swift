@@ -9,7 +9,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var searchViewModel = SearchViewModel()
+
     var body: some View {
         TabView {
             HomeView()
@@ -18,11 +20,11 @@ struct ContentView: View {
                     Text("Home")
                 }
 
-            SearchView(viewModel: viewModel)
-                            .tabItem {
-                                Image(systemName: "magnifyingglass")
-                                Text("Search")
-                            }
+            SearchView(viewModel: searchViewModel)
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
+                }
 
             OthersView()
                 .tabItem {
@@ -33,8 +35,6 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
     }
 }
-
-
 
 struct OthersView: View {
     var body: some View {
@@ -50,5 +50,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
 
 
