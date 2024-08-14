@@ -14,11 +14,23 @@ struct SearchView: View {
         NavigationView {
             VStack {
                 // Arama Barı
-                TextField("Search", text: $viewModel.searchText)
-                    .padding(10)
-                    .background(Color(.systemGray5))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
+                HStack {
+                    TextField("Search", text: $viewModel.searchText)
+                        .padding(10)
+                        .background(Color(.systemGray5))
+                        .cornerRadius(8)
+                    
+                    if !viewModel.searchText.isEmpty {
+                        Button(action: {
+                            viewModel.clearSearch()
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.trailing, 10)
+                    }
+                }
+                .padding(.horizontal)
                 
                 // Durum Mesajları
                 if viewModel.isLoading {
@@ -58,6 +70,9 @@ struct SearchView: View {
             }
             .preferredColorScheme(.dark)
             .navigationBarTitle("TMDB", displayMode: .inline)
+            .onAppear {
+                           viewModel.fetchRandomMovies()
+                       }
         }
     }
 }
@@ -67,5 +82,6 @@ struct SearchView_Previews: PreviewProvider {
         SearchView(viewModel: SearchViewModel())
     }
 }
+
 
 

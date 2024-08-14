@@ -22,7 +22,11 @@ class SearchViewModel: ObservableObject {
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .removeDuplicates()
             .sink { [weak self] searchText in
-                self?.searchMovies(query: searchText)
+                if searchText.isEmpty {
+                    self?.fetchRandomMovies()
+                } else {
+                    self?.searchMovies(query: searchText)
+                }
             }
             .store(in: &cancellables)
     }
@@ -51,12 +55,31 @@ class SearchViewModel: ObservableObject {
         }
     }
     
+    func fetchRandomMovies() {
+        isLoading = true
+        errorMessage = nil
+
+        // Rastgele bir film listesini alıyoruz (örneğin, popüler filmler)
+        apiService.fetchPopularMovies { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success(let movies):
+                    self?.searchResults = movies.shuffled() // Filmleri karıştırarak rastgele göster
+                case .failure(let error):
+                    self?.errorMessage = "Error fetching random movies: \(error.localizedDescription)"
+                }
+            }
+        }
+    }
+    
     func clearSearch() {
         searchText = ""
-        searchResults = []
+        fetchRandomMovies()
         isLoading = false
         errorMessage = nil
     }
 }
+
 
 
