@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = HomeViewModel()
     var body: some View {
         TabView {
             HomeView()
@@ -17,11 +18,11 @@ struct ContentView: View {
                     Text("Home")
                 }
 
-            SearchView() // SearchView yerine ekleniyor
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("Search")
-                }
+            SearchView(viewModel: viewModel)
+                            .tabItem {
+                                Image(systemName: "magnifyingglass")
+                                Text("Search")
+                            }
 
             OthersView()
                 .tabItem {

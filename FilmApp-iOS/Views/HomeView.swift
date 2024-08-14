@@ -59,10 +59,10 @@ struct HomeView: View {
             .preferredColorScheme(.dark)
             .navigationBarHidden(true)
             .onAppear {
-                viewModel.fetchNowPlayingMovies()
-                viewModel.fetchPopularMovies()
-                viewModel.fetchTopRatedMovies()
-                viewModel.fetchUpcomingMovies()
+                viewModel.fetchNowPlayingMovies(completion: {})
+                viewModel.fetchPopularMovies(completion: {})
+                viewModel.fetchTopRatedMovies(completion: {})
+                viewModel.fetchUpcomingMovies(completion: {})
             }
         }
     }
