@@ -9,50 +9,66 @@ import SwiftUI
 
 struct SearchView: View {
     @State private var searchText = ""
-
+    @ObservedObject var viewModel: HomeViewModel
+    
     var body: some View {
-        ZStack {
-            
-        VStack {
-            HStack {
-                Spacer() // Sol tarafta boşluk bırakıyoruz
+        NavigationView {
+            VStack {
+                // Arama Barı
+                TextField("Search", text: $searchText)
+                    .padding(10)
+                    .background(Color(.systemGray5))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
                 
-                Text("TMDB")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                   .padding(.top, 10) // Üst boşluk ekleniyor
-                   
-                
-                Spacer() // Sağ tarafta boşluk bırakıyoruz
+                // Filmler Listesi
+                ScrollView {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible(), spacing: 16),
+                        GridItem(.flexible(), spacing: 16),
+                        GridItem(.flexible(), spacing: 16)
+                    ], spacing: 16) {
+                        ForEach(filteredMovies) { movie in
+                            VStack {
+                                NavigationLink(destination: MovieDetailView(movie: movie)) {
+                                    AsyncImage(url: movie.posterURL) { image in
+                                        image.resizable()
+                                            .aspectRatio(2/3, contentMode: .fit) // Dikey poster oranı
+                                            .cornerRadius(8) // Köşe yumuşatma
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16) // Yatayda boşluk ayarı
+                }
             }
-            .padding(.horizontal)
-            // Search Bar
-            TextField("Search movies...", text: $searchText)
-                .padding(10)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .padding(.horizontal)
-                .padding(.top, 20)
-            
-            Spacer()
-            
-            // Placeholder for search results
-            Text("Search results will appear here")
-                .foregroundColor(.gray)
-                .padding()
-            
-            Spacer()
+            .preferredColorScheme(.dark)
+            .navigationBarTitle("TMDB", displayMode: .inline)
+            .onAppear {
+                viewModel.fetchAllData() // Tüm filmleri yükle
+            }
         }
     }
-        .preferredColorScheme(.dark)
-        .navigationTitle("Search")
-        .navigationBarTitleDisplayMode(.inline)
+    
+    var filteredMovies: [Movie] {
+        if searchText.isEmpty {
+            return viewModel.allMovies
+        } else {
+            return viewModel.allMovies.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        }
     }
 }
+
+
+
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchView(viewModel: HomeViewModel())
     }
 }
+
 
