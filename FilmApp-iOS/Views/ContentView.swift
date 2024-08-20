@@ -28,8 +28,8 @@ struct ContentView: View {
 
             OthersView()
                 .tabItem {
-                    Image(systemName: "movieclapper")
-                    Text("Movie")
+                    Image(systemName: "tv.fill")
+                    Text("TV")
                 }
         }
         .preferredColorScheme(.dark)
