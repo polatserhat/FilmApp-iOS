@@ -99,16 +99,8 @@
 				7302FCCE2C6CC752001F05F7 /* SearchView.swift */,
 				73D8D4102C62932700276B88 /* MovieListView.swift */,
 				73D8D4122C629B6D00276B88 /* MovieDetailView.swift */,
-				73D8D4162C64F11000276B88 /* Api */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		73D8D4162C64F11000276B88 /* Api */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Api;
 			sourceTree = "<group>";
 		};
 		73D8D4172C64F13800276B88 /* Model */ = {
