@@ -54,6 +54,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< HEAD
 		7173C1661C20844DB427AA33 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,12 +62,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> 5400d8cb0b305907c8653a03b8077809bfb9ad04
 		73D8D3EC2C6139E900276B88 = {
 			isa = PBXGroup;
 			children = (
 				73D8D3F72C6139E900276B88 /* FilmApp-iOS */,
 				73D8D3F62C6139E900276B88 /* Products */,
+<<<<<<< HEAD
 				7173C1661C20844DB427AA33 /* Pods */,
+=======
+>>>>>>> 5400d8cb0b305907c8653a03b8077809bfb9ad04
 			);
 			sourceTree = "<group>";
 		};
@@ -258,7 +264,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -321,7 +327,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
