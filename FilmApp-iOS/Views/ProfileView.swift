@@ -11,95 +11,110 @@ struct ProfileView: View {
     @State var userDetails: UserDetails?
     @State var isLoading: Bool = true
     @State var errorMessage: String?
-    
+
     var body: some View {
-        VStack {
-            if isLoading {
-                ProgressView("Loading user details...")
-                    .scaleEffect(1.5)
-                    .padding()
-            } else if let errorMessage = errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .font(.headline)
-                    .padding()
-            } else if let userDetails = userDetails {
-                ScrollView {
-                    VStack(alignment: .center, spacing: 20) {
-                        // Avatar Image
-                        if let avatarPath = userDetails.avatar?.tmdb?.avatar_path, !avatarPath.isEmpty {
-                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500" + avatarPath)) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 150, height: 150)
-                            .clipShape(Circle())
-                            .shadow(radius: 10)
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 150, height: 150)
-                                .foregroundColor(.gray)
-                        }
-                        
-                        // Name and Username
-                        Text(userDetails.name)
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .padding(.top)
-                        
-                        Text("@\(userDetails.username)")
-                            .font(.title2)
-                            .foregroundColor(.secondary)
-                        
-                        // User Info Card
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Image(systemName: "flag.fill")
-                                    .foregroundColor(.blue)
-                                Text("Country: \(userDetails.iso_3166_1)")
-                            }
-                            
-                            HStack {
-                                Image(systemName: "globe")
-                                    .foregroundColor(.blue)
-                                Text("Language: \(userDetails.iso_639_1)")
-                            }
-                            
-                            HStack {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.yellow)
-                                Text("Include Adult Content: \(userDetails.include_adult ? "Yes" : "No")")
-                            }
-                        }
-                        .preferredColorScheme(.dark)
+        NavigationView { // NavigationView eklenmiş
+            VStack {
+                if isLoading {
+                    ProgressView("Loading user details...")
+                        .scaleEffect(1.5)
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(12)
-                        .shadow(radius: 5)
-                        .padding(.horizontal)
-                        
-                        Spacer()
+                } else if let errorMessage = errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .font(.headline)
+                        .padding()
+                } else if let userDetails = userDetails {
+                    ScrollView {
+                        VStack(alignment: .center, spacing: 20) {
+                            // Avatar Image
+                            if let avatarPath = userDetails.avatar?.tmdb?.avatar_path, !avatarPath.isEmpty {
+                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500" + avatarPath)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 150, height: 150)
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                            } else {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 150, height: 150)
+                                    .foregroundColor(.gray)
+                            }
+
+                            // Name and Username
+                            Text(userDetails.name)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .padding(.top)
+
+                            Text("@\(userDetails.username)")
+                                .font(.title2)
+                                .foregroundColor(.secondary)
+
+                            // User Info Card
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Image(systemName: "flag.fill")
+                                        .foregroundColor(.blue)
+                                    Text("Country: \(userDetails.iso_3166_1)")
+                                }
+
+                                HStack {
+                                    Image(systemName: "globe")
+                                        .foregroundColor(.blue)
+                                    Text("Language: \(userDetails.iso_639_1)")
+                                }
+
+                                HStack {
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.yellow)
+                                    Text("Include Adult Content: \(userDetails.include_adult ? "Yes" : "No")")
+                                }
+                            }
+                            .preferredColorScheme(.dark)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(12)
+                            .shadow(radius: 5)
+                            .padding(.horizontal)
+
+                            Spacer()
+                        }
+                        .padding(.top)
                     }
-                    .padding(.top)
+                } else {
+                    Text("No user details available")
+                        .font(.headline)
+                        .padding()
                 }
-            } else {
-                Text("No user details available")
-                    .font(.headline)
-                    .padding()
+            }
+            .onAppear {
+                loadUserDetails()
+            }
+            .navigationTitle("Profile") // navigationBarTitle güncellenmiş
+            .toolbar { // .toolbar kullanılmış
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    settingsButton
+                }
             }
         }
-        .onAppear {
-            loadUserDetails()
-        }
-        .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.inline)
     }
-    
+
+    // Settings button that navigates to SettingsView
+    var settingsButton: some View {
+        NavigationLink(destination: SettingsView()) {
+            Image(systemName: "gearshape.fill")
+                .imageScale(.large)
+                .foregroundColor(.primary)
+        }
+    }
+
     func loadUserDetails() {
         APIUser().fetchUserDetails { details in
             DispatchQueue.main.async {
