@@ -7,21 +7,10 @@
 
 import Foundation
 
-struct Avatar: Codable {
-    let gravatar: Gravatar
-    let tmdb: Tmdb
-}
-
-struct Gravatar: Codable {
-    let hash: String
-}
-
-struct Tmdb: Codable {
-    let avatar_path: String
-}
+import Foundation
 
 struct UserDetails: Codable {
-    let avatar: Avatar
+    let avatar: Avatar?
     let id: Int
     let iso_639_1: String
     let iso_3166_1: String
@@ -29,4 +18,18 @@ struct UserDetails: Codable {
     let include_adult: Bool
     let username: String
 }
+
+struct Avatar: Codable {
+    let gravatar: Gravatar?
+    let tmdb: TMDB?
+}
+
+struct Gravatar: Codable {
+    let hash: String
+}
+
+struct TMDB: Codable {
+    let avatar_path: String?
+}
+
 
