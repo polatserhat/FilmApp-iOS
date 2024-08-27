@@ -6,24 +6,24 @@
 //
 import SwiftUI
 
-
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
+    @State private var userDetails: UserDetails? = nil // Kullanıcı bilgilerini tutacağız
     
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(spacing: 0) {
                     HStack {
-                        Spacer() // Sol tarafta boşluk bırakıyoruz
+                        Spacer()
                         
                         Text("TMDB")
                             .font(.title2)
                             .fontWeight(.bold)
-                            .padding(.top, 10) // Üst boşluk ekleniyor
+                            .padding(.top, 10)
                             .padding(.bottom,20)
                         
-                        Spacer() // Sağ tarafta boşluk bırakıyoruz
+                        Spacer()
                     }
                     .padding(.horizontal)
                     
@@ -38,22 +38,21 @@ struct HomeView: View {
                             //Top Rated Section
                             CategoryView(categoryTitle: "Top Rated", movies: viewModel.topRatedMovies)
                             
-                            // Upcoming Section
+                            //Upcoming Section
                             CategoryView(categoryTitle: "Upcoming", movies: viewModel.upcomingMovies)
                         }
                     }
                 }
-                .background(Color.black) // Arka plan rengini koyu yapıyoruz
-
-                // Ayarlar butonunu sağ üst köşeye yerleştiriyoruz
+                .background(Color.black)
+                
+                // Sağ üst köşede profil butonu
                 VStack {
                     HStack {
-                        Spacer() // Sağ üst köşe için boşluk
-                        settingsButton
+                        Spacer()
+                        profileButton // Yeni profil butonu
                     }
-                    Spacer() // Butonu yukarıda tutmak için alt taraf boşluğu
+                    Spacer()
                 }
-                
             }
             .preferredColorScheme(.dark)
             .navigationBarHidden(true)
@@ -62,41 +61,50 @@ struct HomeView: View {
                 viewModel.fetchPopularMovies(completion: {})
                 viewModel.fetchTopRatedMovies(completion: {})
                 viewModel.fetchUpcomingMovies(completion: {})
+                loadUserDetails() // Kullanıcı detaylarını yükle
+            }
+        }
+    }
+    
+    // Profil butonu için NavigationLink
+    var profileButton: some View {
+        NavigationLink(destination: ProfileView(userDetails: userDetails)) {
+            if let avatarPath = userDetails?.avatar?.tmdb?.avatar_path, !avatarPath.isEmpty {
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500" + avatarPath)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 40, height: 40)
+                .clipShape(Circle())
+            } else {
+                Image(systemName: "person.crop.circle")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(.white)
+            }
+        }
+        .padding(10)
+    }
+    
+    func loadUserDetails() {
+        // APIUser sınıfından kullanıcı bilgilerini çek
+        APIUser().fetchUserDetails { details in
+            DispatchQueue.main.async {
+                self.userDetails = details
             }
         }
     }
 }
-
-
-var settingsButton: some View {
-    NavigationLink(destination: SettingsView()) {
-        Image(systemName: "gearshape")
-            .imageScale(.medium)
-            .padding(10)
-            .foregroundColor(.white)
-            .fontWeight(.bold)
-            
-    }
-}
-
-struct SettingsView: View {
-    var body: some View {
-        Text("Settings")
-            .font(.largeTitle)
-            .navigationBarTitle("Settings", displayMode: .inline)
-    }
-}
-
-
-
-
 
 struct CategoryView: View {
     let categoryTitle: String
     let movies: [Movie]
 
     var body: some View {
-        VStack(alignment: .leading,spacing: 2) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Text(categoryTitle)
                     .font(.title)
@@ -110,7 +118,7 @@ struct CategoryView: View {
             .padding(.horizontal)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack{
+                HStack(spacing: 16) {
                     ForEach(movies) { movie in
                         NavigationLink(destination: MovieDetailView(movie: movie)) {
                             MovieCell(movie: movie)
@@ -118,11 +126,11 @@ struct CategoryView: View {
                     }
                 }
                 .padding(.horizontal)
-                .foregroundColor(.white) // Yazıların beyaz renk olmasını sağlar
-                .fontWeight(.bold)
+                .foregroundColor(.white)
             }
         }
-        .padding(.vertical,0)
+        .padding(.vertical, 10)
+        .background(Color.black)
     }
 }
 
@@ -133,6 +141,7 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
+
 
 
 
