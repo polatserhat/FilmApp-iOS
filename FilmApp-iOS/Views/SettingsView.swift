@@ -11,14 +11,14 @@ struct SettingsView: View {
     @AppStorage("isDarkMode") private var isDarkMode = false
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-
+    
     var body: some View {
         VStack {
             Toggle(isOn: $isDarkMode) {
                 Text("Dark Mode")
             }
             .padding()
-
+            
             Button(action: {
                 UserDefaults.standard.set(false, forKey: "isLoggedIn")
                 presentationMode.wrappedValue.dismiss()
@@ -35,33 +35,37 @@ struct SettingsView: View {
             Spacer()
         }
         .navigationTitle("Settings")
-        .onAppear {
-            updateInterfaceStyle()
-        }
+                .navigationBarTitleDisplayMode(.inline)
+                
+                
     }
-
-    func updateInterfaceStyle() {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            return
         }
-        windowScene.windows.first?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
-    }
-}
-
-
-struct AppRootView: View {
-    @AppStorage("isLoggedIn") var isLoggedIn = false
     
-    var body: some View {
-        if isLoggedIn {
-            HomeView()
-        } else {
-            LoginView(isLoggedIn: $isLoggedIn)
+    
+    
+    //func updateInterfaceStyle() {
+      //  guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+       //     return
+        //}
+       // windowScene.windows.first?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+   // }
+    
+    
+    
+    struct AppRootView: View {
+        @AppStorage("isLoggedIn") var isLoggedIn = false
+        
+        var body: some View {
+            if isLoggedIn {
+                HomeView()
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn)
+            }
         }
     }
-}
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
+    struct SettingsView_Previews: PreviewProvider {
+        static var previews: some View {
+            SettingsView()
+        }
     }
-}
+

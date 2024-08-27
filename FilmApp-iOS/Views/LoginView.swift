@@ -19,7 +19,14 @@ struct LoginView: View {
                 Text("Welcome!")
                     .font(.largeTitle)
                     .padding()
+                    
             } else {
+                Image("tmdb")
+                       .resizable()
+                       .aspectRatio(contentMode: .fit)
+                       .frame(width: 300, height: 300) // Resmin orantılı ve boyutlu olmasını sağlar
+                       .padding(.bottom, 20)
+                    
                 TextField("Username", text: $username)
                     .padding()
                     .background(Color(.secondarySystemBackground))
