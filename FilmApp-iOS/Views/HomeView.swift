@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-import SwiftUI
 
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
@@ -90,7 +89,7 @@ struct SettingsView: View {
 
 
 
-import SwiftUI
+
 
 struct CategoryView: View {
     let categoryTitle: String

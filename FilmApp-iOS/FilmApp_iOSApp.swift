@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct FilmApp_iOSApp: App {
+    @State private var isLoggedIn = false
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isLoggedIn {
+                ContentView()  // Kullanıcı giriş yaptıysa ana içerik ekranı göster
+            } else {
+                LoginView(isLoggedIn: $isLoggedIn)  // Kullanıcı giriş yapmadıysa login ekranı göster
+            }
         }
     }
 }
+

@@ -13,6 +13,7 @@ struct ContentView: View {
     @StateObject private var searchViewModel = SearchViewModel()
 
     var body: some View {
+       
         TabView {
             HomeView()
                 .tabItem {
