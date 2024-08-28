@@ -43,7 +43,7 @@ struct HomeView: View {
                         }
                     }
                 }
-                .background(Color.black)
+                .background(Color(UIColor.systemBackground)) // Dinamik arka plan rengi
                 
                 // Sağ üst köşede profil butonu
                 VStack {
@@ -54,7 +54,7 @@ struct HomeView: View {
                     Spacer()
                 }
             }
-            .preferredColorScheme(.dark)
+           
             .navigationBarHidden(true)
             .onAppear {
                 viewModel.fetchNowPlayingMovies(completion: {})
@@ -83,7 +83,7 @@ struct HomeView: View {
                 Image(systemName: "person.crop.circle")
                     .resizable()
                     .frame(width: 40, height: 40)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary) // Dinamik simge rengi
             }
         }
         .padding(10)
@@ -112,7 +112,7 @@ struct CategoryView: View {
                 Spacer()
                 NavigationLink(destination: MovieListView(movies: movies, categoryTitle: categoryTitle)) {
                     Text("Show All")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary) // Dinamik metin rengi
                 }
             }
             .padding(.horizontal)
@@ -126,21 +126,20 @@ struct CategoryView: View {
                     }
                 }
                 .padding(.horizontal)
-                .foregroundColor(.white)
+                .foregroundColor(.primary) // Dinamik renk
             }
         }
         .padding(.vertical, 10)
-        .background(Color.black)
+        .background(Color(UIColor.systemBackground)) // Dinamik arka plan rengi
     }
 }
-
-
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
 }
+
 
 
 

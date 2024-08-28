@@ -56,7 +56,7 @@ struct LoginView: View {
             }
         }
         .padding()
-        .preferredColorScheme(.dark)
+        
     }
         
     

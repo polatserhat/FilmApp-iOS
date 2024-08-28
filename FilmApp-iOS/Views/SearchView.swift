@@ -68,7 +68,7 @@ struct SearchView: View {
                     .padding(.horizontal, 16) // Yatayda boşluk ayarı
                 }
             }
-            .preferredColorScheme(.dark)
+            
             .navigationBarTitle("TMDB", displayMode: .inline)
             .onAppear {
                            viewModel.fetchRandomMovies()

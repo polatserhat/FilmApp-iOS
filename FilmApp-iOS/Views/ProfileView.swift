@@ -75,7 +75,7 @@ struct ProfileView: View {
                                 Text("Include Adult Content: \(userDetails.include_adult ? "Yes" : "No")")
                             }
                         }
-                        .preferredColorScheme(.dark)
+                        
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color(.systemGray6))

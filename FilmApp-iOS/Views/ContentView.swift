@@ -33,7 +33,7 @@ struct ContentView: View {
                     Text("TV")
                 }
         }
-        .preferredColorScheme(.dark)
+        
     }
 }
 
